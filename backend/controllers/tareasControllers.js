@@ -3,7 +3,14 @@ const getTareas = (req, res) => {
 }
 
 const createTareas = (req, res) => {
-    res.status(201).json({message: 'Crear Tareas'})
+
+    if(!req.body.texto) {
+        res.status(400)
+        throw new Error('Por favor teclea una descripcion a la tarea')
+    }
+        // console.log(req.body.texto)
+        res.status(201).json({message: 'Crear Tareas'})
+        
 }
 
 const updateTareas = (req, res) => {
