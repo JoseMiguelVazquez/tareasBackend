@@ -1,20 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const { getTareas } = require('../controllers/tareasControllers')
+const { getTareas, createTareas, updateTareas, deleteTareas } = require('../controllers/tareasControllers')
 
 router.get('/', getTareas)
 
-router.post('/', (req, res) => {
-    res.status(201).json({message: 'Crear Tareas'})
-})
+router.post('/', createTareas)
 
-router.put('/:id', (req, res) => {
-    res.status(200).json({message: `Modificar la tarea con id ${req.params.id}`})
-})
+router.put('/:id',updateTareas)
 
-router.delete('/:id', (req, res) => {
-    res.status(200).json({message: `Borrar la tarea con id ${req.params.id}`})
-})
+router.delete('/:id', deleteTareas)
 
 module.exports = router
 
