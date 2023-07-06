@@ -1,4 +1,4 @@
 # tareasBackend
 
 
-Backend made with node and express.js
+Backend made with node.js and express
