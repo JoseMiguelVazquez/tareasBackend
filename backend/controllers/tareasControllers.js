@@ -35,6 +35,7 @@ const deleteTareas = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('La tarea no existe')
     }
+    // Dos formas de hacerlo
     tarea.deleteOne()
     // const tareaDeleted = await Tarea.findByIdAndDelete(req.params.id)
     res.status(200).json({ id: req.params.id })
