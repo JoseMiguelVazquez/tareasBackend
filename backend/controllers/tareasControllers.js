@@ -2,12 +2,12 @@ const asyncHandler = require('express-async-handler')
 const Tarea = require('../models/tareasModel')
 
 
-const getTareas = asyncHandler( async (req, res) => {
+const getTareas = asyncHandler(async (req, res) => {
     const tareas = await Tarea.find()
     res.status(200).json(tareas)
 })
 
-const createTareas = asyncHandler( async (req, res) => {
+const createTareas = asyncHandler(async (req, res) => {
     if(!req.body.texto) {
         res.status(400)
         throw new Error('Por favor teclea una descripcion a la tarea')
