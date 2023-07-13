@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async (req,res) => {
         name,
         email,
         password: hashedPassword
-    })
+    }) //name: name (nombre de la propiedad del model y dato destructurado del formulario)
 
     if(user){
         res.status(201)
@@ -47,12 +47,41 @@ const registerUser = asyncHandler(async (req,res) => {
 })
 
 const loginUser = asyncHandler(async (req,res) => {
-    res.json({message: 'Usuario Logueado'})
+    //Desestructuramos los datos del req.body
+    const {email, password} = req.body
+
+    //Verificamos que nos pasen todos los datos requeridos
+    if(!email || !password){
+        res.status(400)
+        throw new Error('Faltan datos, favor de verificar')
+    }
+
+    //Buscar que el usuario exista
+    const user = await User.findOne({email})
+    
+    //verificar el password
+    if(user && (await bcrypt.compare(password, user.password))){//compara el password del input del formulario y el hash del password del usuario en base de datos
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            token: generateToken(user._id)
+        })
+    }else{
+        res.status(401)
+        throw new Error('Datos de acceso incorrectos')
+    }
 })
 
 const getUserData = asyncHandler(async (req,res) => {
     res.json({message: 'User Data'})
 })
+
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: '30m'
+    })
+}
 
 module.exports = {
     registerUser,
